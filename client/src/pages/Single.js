@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Menu from "../components/Menu";
 import Delete from "../img/delete.png";
 import Edit from "../img/edit.png";
 
@@ -43,7 +44,7 @@ const Single = () => {
           architecto?
         </p>
       </div>
-      <div className="menu">m</div>
+      <Menu />
     </div>
   );
 };
