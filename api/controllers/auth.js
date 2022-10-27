@@ -5,8 +5,9 @@ import { db } from "../db.js";
 export const register = (req, res, next) => {
   // CHECK EXISTING USER
   const q = "SELECT * FROM users WHERE email = ? or username = ?";
+
   db.query(q, [req.body.email, req.body.name], (err, data) => {
-    if (err) return res.json(err);
+    if (err) return res.status(400).json(err);
     if (data.length) return res.status(409).json("User already exists");
 
     // hash the password and create a user
@@ -16,8 +17,7 @@ export const register = (req, res, next) => {
     const values = [req.body.username, req.body.email, hash];
 
     db.query(q, [values], (err, data) => {
-      if (err) return res.json(err);
-      console.log(data);
+      if (err) return res.status(400).json(err);
       return res.status(200).json("User has been created");
     });
   });
@@ -29,7 +29,6 @@ export const login = (req, res, next) => {
     if (err) return res.json(err);
 
     if (data.length === 0) return res.status(404).json("User not found!");
-    console.log(data);
 
     // CHECK Password
     const isPasswordCorrect = bcrypt.compareSync(
@@ -44,7 +43,7 @@ export const login = (req, res, next) => {
     const { password, ...other } = data[0];
 
     res
-      .cookie("access-token", token, {
+      .cookie("access_token", token, {
         httpOnly: true,
       })
       .status(200)
