@@ -1,6 +1,15 @@
 {
   "version": 2,
-  "name": "blog-site-react-node-mysql",
-  "builds": [{ "src": "./api/index.js", "use": "@vercel/node" }],
-  "routes": [{ "src": "./api/(.*)", "dest": "./api/app.js" }]
+  "builds": [
+    {
+      "src": "./index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ]
 }
