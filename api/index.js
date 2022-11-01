@@ -1,6 +1,7 @@
 import cookieParser from "cookie-parser";
 import express from "express";
 import multer from "multer";
+import path from "path";
 import authRoutes from "./routes/auth.js";
 import postRoutes from "./routes/posts.js";
 import userRoutes from "./routes/users.js";
@@ -30,9 +31,10 @@ app.post("/api/upload", upload.single("file"), function (req, res) {
 
 app.get("/", (req, res) => {
   // res.json({ msg: "its works" });
-  res.sendFile("../client/build/index.html");
+  app.use("/", express.static(path.resolve("..", "client", "build")));
+  res.sendFile(path.resolve("..", "client", "build", "index.html"));
 });
-app.use("/", express.static("../client/build"));
+
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
