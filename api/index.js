@@ -14,7 +14,7 @@ app.use(cookieParser());
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "../client/public/upload");
+    cb(null, "../client/build/upload");
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + file.originalname);
@@ -29,9 +29,10 @@ app.post("/api/upload", upload.single("file"), function (req, res) {
 });
 
 app.get("/", (req, res) => {
-  res.json({ msg: "its works" });
+  // res.json({ msg: "its works" });
+  res.sendFile("../client/build/index.html");
 });
-
+app.use("/", express.static("../client/build"));
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
